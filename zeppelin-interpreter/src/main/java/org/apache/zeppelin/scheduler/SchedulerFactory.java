@@ -82,6 +82,18 @@ public class SchedulerFactory {
     }
   }
 
+  public Scheduler createOrGetConfInterpreterScheduler(String schedulerName) {
+    synchronized (schedulers) {
+      if (!schedulers.containsKey(schedulerName)) {
+        LOGGER.info("Create ConfInterpreterScheduler: {}", schedulerName);
+        ConfInterpreterScheduler s = new ConfInterpreterScheduler(schedulerName);
+        schedulers.put(schedulerName, s);
+        executor.execute(s);
+      }
+      return schedulers.get(schedulerName);
+    }
+  }
+
   public Scheduler createOrGetParallelScheduler(String name, int maxConcurrency) {
     synchronized (schedulers) {
       if (!schedulers.containsKey(name)) {

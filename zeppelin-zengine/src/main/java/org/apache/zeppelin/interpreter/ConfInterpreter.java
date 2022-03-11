@@ -18,6 +18,8 @@
 package org.apache.zeppelin.interpreter;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.zeppelin.scheduler.Scheduler;
+import org.apache.zeppelin.scheduler.SchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,5 +92,10 @@ public class ConfInterpreter extends Interpreter {
   @Override
   public int getProgress(InterpreterContext context) throws InterpreterException {
     return 0;
+  }
+
+  @Override
+  public Scheduler getScheduler() {
+    return SchedulerFactory.singleton().createOrGetConfInterpreterScheduler("ConfInterpreter-Scheduler");
   }
 }

@@ -20,6 +20,7 @@ package org.apache.zeppelin.interpreter;
 
 import org.apache.zeppelin.conf.ZeppelinConfiguration;
 import org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcess;
+import org.apache.zeppelin.scheduler.ConfInterpreterScheduler;
 import org.apache.zeppelin.scheduler.Job;
 import org.apache.zeppelin.scheduler.Scheduler;
 import org.apache.zeppelin.scheduler.SchedulerFactory;
@@ -160,13 +161,16 @@ public class ManagedInterpreterGroup extends InterpreterGroup {
 
     try {
       LOGGER.info("Trying to close interpreter {}", interpreter.getClassName());
+      //TODO(zjffdu) move the close of schedule to Interpreter
       interpreter.close();
     } catch (InterpreterException e) {
       LOGGER.warn("Fail to close interpreter {}", interpreter.getClassName(), e);
     }
 
-    //TODO(zjffdu) move the close of schedule to Interpreter
-    SchedulerFactory.singleton().removeScheduler(scheduler.getName());
+    if (!(scheduler instanceof ConfInterpreterScheduler)) {
+      // Don't remove ConfInterpreterScheduler, it is shared by all the interpreter types.
+      SchedulerFactory.singleton().removeScheduler(scheduler.getName());
+    }
   }
 
   public synchronized List<Interpreter> getOrCreateSession(String user, String sessionId) {
