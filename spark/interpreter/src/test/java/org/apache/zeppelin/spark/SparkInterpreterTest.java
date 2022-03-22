@@ -152,6 +152,11 @@ public class SparkInterpreterTest {
         "val circle1 = new Circle(5.0)", getInterpreterContext());
     assertEquals(InterpreterResult.Code.SUCCESS, result.code());
 
+    // use case class in spark
+    //    context = getInterpreterContext();
+    //    result = interpreter.interpret("sc\n.range(1, 10)\n.map(e=>Circle(e))\n.collect()", context);
+    //    assertEquals(context.out.toString(), InterpreterResult.Code.SUCCESS, result.code());
+
     // class extend
     result = interpreter.interpret("import java.util.ArrayList", getInterpreterContext());
     assertEquals(InterpreterResult.Code.SUCCESS, result.code());
@@ -162,9 +167,9 @@ public class SparkInterpreterTest {
     // spark rdd operation
     context = getInterpreterContext();
     context.setParagraphId("pid_1");
-    result = interpreter.interpret("sc\n.range(1, 10)\n.sum", context);
+    result = interpreter.interpret("sc\n.range(1, 10)\n.map(e=>2 * e)\n.sum", context);
     assertEquals(InterpreterResult.Code.SUCCESS, result.code());
-    assertTrue(output.contains("45"));
+    assertTrue(output.contains("90"));
     ArgumentCaptor<Map> captorEvent = ArgumentCaptor.forClass(Map.class);
     verify(mockRemoteEventClient).onParaInfosReceived(captorEvent.capture());
     assertEquals("pid_1", captorEvent.getValue().get("paraId"));
