@@ -45,8 +45,9 @@ public class UpdateStreamSqlJob extends AbstractStreamSqlJob {
                             JobManager jobManager,
                             InterpreterContext context,
                             int defaultParallelism,
+                            long defaultRefreshInterval,
                             FlinkShims flinkShims) {
-    super(senv, stEnv, jobManager, context, defaultParallelism, flinkShims);
+    super(senv, stEnv, jobManager, context, defaultParallelism, defaultRefreshInterval, flinkShims);
   }
 
   @Override

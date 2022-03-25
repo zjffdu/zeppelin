@@ -136,19 +136,22 @@ class FlinkZeppelinContext(val flinkInterpreter: FlinkScalaInterpreter,
     if (streamType.equalsIgnoreCase("single")) {
       val streamJob = new SingleRowStreamSqlJob(flinkInterpreter.getStreamExecutionEnvironment,
         table.asInstanceOf[TableImpl].getTableEnvironment,
-        flinkInterpreter.getJobManager, context, flinkInterpreter.getDefaultParallelism, flinkInterpreter.getFlinkShims)
+        flinkInterpreter.getJobManager, context, flinkInterpreter.getDefaultParallelism,
+        flinkInterpreter.getRefreshInterval(), flinkInterpreter.getFlinkShims)
       streamJob.run(table, tableName)
     }
     else if (streamType.equalsIgnoreCase("append")) {
       val streamJob = new AppendStreamSqlJob(flinkInterpreter.getStreamExecutionEnvironment,
         table.asInstanceOf[TableImpl].getTableEnvironment,
-        flinkInterpreter.getJobManager, context, flinkInterpreter.getDefaultParallelism, flinkInterpreter.getFlinkShims)
+        flinkInterpreter.getJobManager, context, flinkInterpreter.getDefaultParallelism,
+        flinkInterpreter.getRefreshInterval(), flinkInterpreter.getFlinkShims)
       streamJob.run(table, tableName)
     }
     else if (streamType.equalsIgnoreCase("update")) {
       val streamJob = new UpdateStreamSqlJob(flinkInterpreter.getStreamExecutionEnvironment,
         table.asInstanceOf[TableImpl].getTableEnvironment,
-        flinkInterpreter.getJobManager, context, flinkInterpreter.getDefaultParallelism, flinkInterpreter.getFlinkShims)
+        flinkInterpreter.getJobManager, context, flinkInterpreter.getDefaultParallelism,
+        flinkInterpreter.getRefreshInterval(), flinkInterpreter.getFlinkShims)
       streamJob.run(table, tableName)
     }
     else throw new IOException("Unrecognized stream type: " + streamType)

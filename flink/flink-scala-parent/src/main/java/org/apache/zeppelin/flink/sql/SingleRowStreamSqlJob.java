@@ -46,8 +46,9 @@ public class SingleRowStreamSqlJob extends AbstractStreamSqlJob {
                                JobManager jobManager,
                                InterpreterContext context,
                                int defaultParallelism,
+                               long defaultRefreshInterval,
                                FlinkShims flinkShims) {
-    super(senv, stenv, jobManager, context, defaultParallelism, flinkShims);
+    super(senv, stenv, jobManager, context, defaultParallelism, defaultRefreshInterval, flinkShims);
     this.template = context.getLocalProperties().getOrDefault("template", "{0}");
   }
 

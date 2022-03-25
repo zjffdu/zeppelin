@@ -49,8 +49,9 @@ public class AppendStreamSqlJob extends AbstractStreamSqlJob {
                             JobManager jobManager,
                             InterpreterContext context,
                             int defaultParallelism,
+                            long defaultRefreshInterval,
                             FlinkShims flinkShims) {
-    super(senv, stEnv, jobManager, context, defaultParallelism, flinkShims);
+    super(senv, stEnv, jobManager, context, defaultParallelism, defaultRefreshInterval, flinkShims);
     this.tsWindowThreshold = Long.parseLong(context.getLocalProperties()
             .getOrDefault("threshold", 1000 * 60 * 60 + ""));
   }

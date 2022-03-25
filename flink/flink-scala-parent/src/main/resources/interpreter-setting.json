@@ -200,6 +200,13 @@
         "defaultValue": "1000",
         "description": "Check interval (in milliseconds) to check flink job progress",
         "type": "number"
+      },
+      "zeppelin.flink.sql.stream.refreshInterval": {
+        "envName": "zeppelin.flink.sql.stream.refreshInterval",
+        "propertyName": "zeppelin.flink.sql.stream.refreshInterval",
+        "defaultValue": "3000",
+        "description": "Refresh interval (in milliseconds) of streaming data in notebook frontend",
+        "type": "number"
       }
     },
     "editor": {

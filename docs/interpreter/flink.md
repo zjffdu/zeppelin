@@ -321,6 +321,11 @@ You can also add and set other Flink properties which are not listed in the tabl
     <td>true</td>
     <td>Whether cancel Flink job when closing interpreter</td>
   </tr>
+  <tr>
+    <td>zeppelin.flink.sql.stream.refreshInterval</td>
+    <td>3000</td>
+    <td>Refresh interval (in milliseconds) of streaming data in notebook frontend</td>
+  </tr>
 </table>
 
 

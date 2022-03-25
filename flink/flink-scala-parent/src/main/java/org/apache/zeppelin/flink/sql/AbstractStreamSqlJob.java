@@ -68,6 +68,7 @@ public abstract class AbstractStreamSqlJob {
   protected Object resultLock = new Object();
   protected volatile boolean enableToRefresh = true;
   protected int defaultParallelism;
+  protected long defaultRefreshInterval;
   protected FlinkShims flinkShims;
   protected ScheduledExecutorService refreshScheduler = Executors.newScheduledThreadPool(1);
 
@@ -76,12 +77,14 @@ public abstract class AbstractStreamSqlJob {
                               JobManager jobManager,
                               InterpreterContext context,
                               int defaultParallelism,
+                              long defaultRefreshInterval,
                               FlinkShims flinkShims) {
     this.senv = senv;
     this.stenv = stenv;
     this.jobManager = jobManager;
     this.context = context;
     this.defaultParallelism = defaultParallelism;
+    this.defaultRefreshInterval = defaultRefreshInterval;
     this.flinkShims = flinkShims;
   }
 
@@ -155,7 +158,7 @@ public abstract class AbstractStreamSqlJob {
 
       long delay = 1000L;
       long period = Long.parseLong(
-              context.getLocalProperties().getOrDefault("refreshInterval", "3000"));
+              context.getLocalProperties().getOrDefault("refreshInterval", defaultRefreshInterval + ""));
       refreshScheduler.scheduleAtFixedRate(new RefreshTask(context), delay, period, MILLISECONDS);
 
       ResultRetrievalThread retrievalThread = new ResultRetrievalThread(refreshScheduler);

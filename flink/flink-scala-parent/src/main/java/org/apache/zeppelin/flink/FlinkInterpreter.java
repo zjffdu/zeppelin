@@ -216,4 +216,8 @@ public class FlinkInterpreter extends Interpreter {
   public FlinkVersion getFlinkVersion() {
     return this.innerIntp.getFlinkVersion();
   }
+
+  public Long getRefreshInterval() {
+    return this.innerIntp.getRefreshInterval();
+  }
 }

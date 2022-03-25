@@ -920,6 +920,10 @@ abstract class FlinkScalaInterpreter(val properties: Properties,
 
   def completion(buf: String, cursor: Int, context: InterpreterContext): java.util.List[InterpreterCompletion]
 
+  def getRefreshInterval(): Long = {
+    properties.getProperty("zeppelin.flink.sql.stream.refreshInterval", "3000").toLong
+  }
+
   private def getConfigurationOfStreamExecutionEnv(): Configuration = {
     val configurationField = classOf[JStreamExecutionEnvironment].getDeclaredField("configuration")
     configurationField.setAccessible(true)

@@ -60,6 +60,7 @@ public class FlinkStreamSqlInterpreter extends FlinkSqlInterpreter {
               flinkInterpreter.getJobManager(),
               context,
               flinkInterpreter.getDefaultParallelism(),
+              flinkInterpreter.getRefreshInterval(),
               flinkInterpreter.getFlinkShims());
       try {
         streamJob.run(sql);
@@ -73,6 +74,7 @@ public class FlinkStreamSqlInterpreter extends FlinkSqlInterpreter {
               flinkInterpreter.getJobManager(),
               context,
               flinkInterpreter.getDefaultParallelism(),
+              flinkInterpreter.getRefreshInterval(),
               flinkInterpreter.getFlinkShims());
       try {
         streamJob.run(sql);
@@ -86,6 +88,7 @@ public class FlinkStreamSqlInterpreter extends FlinkSqlInterpreter {
               flinkInterpreter.getJobManager(),
               context,
               flinkInterpreter.getDefaultParallelism(),
+              flinkInterpreter.getRefreshInterval(),
               flinkInterpreter.getFlinkShims());
       try {
         streamJob.run(sql);
