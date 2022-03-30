@@ -339,6 +339,10 @@ public class InterpreterOutput extends OutputStream {
     }
   }
 
+  public void println(String string) throws IOException {
+    write(string + NEW_LINE_CHAR);
+  }
+
   /**
    * write contents in the resource file in the classpath
    * @param url

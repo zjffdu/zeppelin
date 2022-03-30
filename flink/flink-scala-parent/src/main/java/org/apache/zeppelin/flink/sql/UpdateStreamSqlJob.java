@@ -92,7 +92,6 @@ public class UpdateStreamSqlJob extends AbstractStreamSqlJob {
       return f1.compareTo(f2);
     });
     builder.append(tableToString(materializedTable));
-    builder.append("\n%text\n");
     return builder.toString();
   }
 
@@ -101,7 +100,7 @@ public class UpdateStreamSqlJob extends AbstractStreamSqlJob {
     context.out().clear(false);
     try {
       String result = buildResult();
-      context.out.write(result);
+      context.out.println(result);
       context.out.flush();
       LOGGER.debug("Refresh with data: " + result);
       this.lastSnapshot.clear();

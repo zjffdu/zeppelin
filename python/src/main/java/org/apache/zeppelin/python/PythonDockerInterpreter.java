@@ -181,7 +181,7 @@ public class PythonDockerInterpreter extends Interpreter {
     BufferedReader br = new BufferedReader(new InputStreamReader(stdout));
     String line;
     while ((line = br.readLine()) != null) {
-      out.write(line + "\n");
+      out.println(line);
     }
     int r = process.waitFor(); // Let the process finish.
     return r;

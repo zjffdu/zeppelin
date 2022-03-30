@@ -817,7 +817,7 @@ public class JDBCInterpreter extends KerberosInterpreter {
             // Regards that the command is DDL.
             if (isDDLCommand(statement.getUpdateCount(),
                 resultSet.getMetaData().getColumnCount())) {
-              context.out.write("%text Query executed successfully.\n");
+              context.out.println("%text Query executed successfully.");
             } else {
               String template = context.getLocalProperties().get("template");
               if (!StringUtils.isBlank(template)) {
@@ -826,8 +826,7 @@ public class JDBCInterpreter extends KerberosInterpreter {
                         new SingleRowInterpreterResult(getFirstRow(resultSet), template, context);
 
                 if (isFirstRefreshMap.get(context.getParagraphId())) {
-                  context.out.write(singleRowResult.toAngular());
-                  context.out.write("\n%text ");
+                  context.out.println(singleRowResult.toAngular());
                   context.out.flush();
                   isFirstRefreshMap.put(context.getParagraphId(), false);
                 }
@@ -836,17 +835,16 @@ public class JDBCInterpreter extends KerberosInterpreter {
               } else {
                 String results = getResults(resultSet,
                         !containsIgnoreCase(sqlToExecute, EXPLAIN_PREDICATE));
-                context.out.write(results);
-                context.out.write("\n%text ");
+                context.out.println(results);
                 context.out.flush();
               }
             }
           } else {
             // Response contains either an update count or there are no results.
             int updateCount = statement.getUpdateCount();
-            context.out.write("\n%text " +
+            context.out.println("%text " +
                 "Query executed successfully. Affected rows : " +
-                    updateCount + "\n");
+                    updateCount);
           }
         } finally {
           if (resultSet != null) {
@@ -1006,7 +1004,7 @@ public class JDBCInterpreter extends KerberosInterpreter {
     String cancelReason = context.getLocalProperties().get(CANCEL_REASON);
     if (StringUtils.isNotBlank(cancelReason)) {
       try {
-        context.out.write(cancelReason);
+        context.out.println(cancelReason);
       } catch (IOException e) {
         LOGGER.error("Fail to write cancel reason");
       }

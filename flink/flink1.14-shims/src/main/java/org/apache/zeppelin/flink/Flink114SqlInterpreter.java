@@ -227,8 +227,8 @@ public class Flink114SqlInterpreter {
         try {
           operations = sqlParser.parse(sql);
         } catch (SqlParserException e) {
-          context.out.write("%text Invalid Sql statement: " + sql + "\n");
-          context.out.write(MESSAGE_HELP.toString());
+          context.out.println("%text Invalid Sql statement: " + sql);
+          context.out.println(MESSAGE_HELP.toString());
           return new InterpreterResult(InterpreterResult.Code.ERROR, e.toString());
         }
 
@@ -238,8 +238,8 @@ public class Flink114SqlInterpreter {
         } catch (Throwable e) {
           LOGGER.error("Fail to run sql:" + sql, e);
           try {
-            context.out.write("%text Fail to run sql command: " +
-                    sql + "\n" + ExceptionUtils.getStackTrace(e) + "\n");
+            context.out.println("%text Fail to run sql command: " +
+                    sql + "\n" + ExceptionUtils.getStackTrace(e));
           } catch (IOException ex) {
             LOGGER.warn("Unexpected exception:", ex);
             return new InterpreterResult(InterpreterResult.Code.ERROR,
@@ -360,7 +360,7 @@ public class Flink114SqlInterpreter {
 
 
   private void callHelp(InterpreterContext context) throws IOException {
-    context.out.write(MESSAGE_HELP.toString() + "\n");
+    context.out.println(MESSAGE_HELP.toString());
   }
 
   private void callInsert(CatalogSinkModifyOperation operation, InterpreterContext context) throws IOException {
@@ -382,7 +382,7 @@ public class Flink114SqlInterpreter {
       tableResult.await();
       JobClient jobClient = tableResult.getJobClient().get();
       if (jobClient.getJobStatus().get() == JobStatus.FINISHED) {
-        context.out.write("Insertion successfully.\n");
+        context.out.println("Insertion successfully.");
       } else {
         throw new IOException("Job is failed, " + jobClient.getJobExecutionResult().get().toString());
       }
@@ -399,7 +399,7 @@ public class Flink114SqlInterpreter {
       TableResult tableResult = ((TableEnvironmentInternal) tbenv).executeInternal(showCreateTableOperation);
       String explanation =
               Objects.requireNonNull(tableResult.collect().next().getField(0)).toString();
-      context.out.write(explanation + "\n");
+      context.out.println(explanation);
     } finally {
       if (lock.isHeldByCurrentThread()) {
         lock.unlock();
@@ -413,7 +413,7 @@ public class Flink114SqlInterpreter {
       TableResult tableResult = ((TableEnvironmentInternal) tbenv).executeInternal(explainOperation);
       String explanation =
               Objects.requireNonNull(tableResult.collect().next().getField(0)).toString();
-      context.out.write(explanation + "\n");
+      context.out.println(explanation);
     } finally {
       if (lock.isHeldByCurrentThread()) {
         lock.unlock();
@@ -439,7 +439,7 @@ public class Flink114SqlInterpreter {
   public void callBatchInnerSelect(String sql, InterpreterContext context) throws IOException {
     Table table = this.tbenv.sqlQuery(sql);
     String result = z.showData(table);
-    context.out.write(result);
+    context.out.println(result);
   }
 
   public void callStreamInnerSelect(String sql, InterpreterContext context) throws IOException {
@@ -467,7 +467,7 @@ public class Flink114SqlInterpreter {
       prettyEntries.sort(String::compareTo);
       prettyEntries.forEach(entry -> {
         try {
-          context.out.write(entry + "\n");
+          context.out.println(entry);
         } catch (IOException e) {
           LOGGER.warn("Fail to write output", e);
         }
@@ -484,7 +484,7 @@ public class Flink114SqlInterpreter {
     if (modifyOperations != null && !modifyOperations.isEmpty()) {
       callInserts(modifyOperations, context);
     } else {
-      context.out.write(MESSAGE_NO_STATEMENT_IN_STATEMENT_SET);
+      context.out.println(MESSAGE_NO_STATEMENT_IN_STATEMENT_SET);
     }
   }
 
@@ -502,13 +502,13 @@ public class Flink114SqlInterpreter {
     List<String> catalogs = CollectionUtil.iteratorToList(tableResult.collect()).stream()
             .map(r -> checkNotNull(r.getField(0)).toString())
             .collect(Collectors.toList());
-    context.out.write("%table catalog\n" + StringUtils.join(catalogs, "\n") + "\n");
+    context.out.println("%table catalog\n" + StringUtils.join(catalogs, "\n"));
   }
 
   private void callShowCurrentCatalog(InterpreterContext context) throws IOException {
     TableResult tableResult = this.tbenv.executeSql("SHOW Current Catalog");
     String catalog = tableResult.collect().next().getField(0).toString();
-    context.out.write("%text current catalog: " + catalog + "\n");
+    context.out.println("%text current catalog: " + catalog);
   }
 
   private void callShowDatabases(InterpreterContext context) throws IOException {
@@ -516,14 +516,14 @@ public class Flink114SqlInterpreter {
     List<String> databases = CollectionUtil.iteratorToList(tableResult.collect()).stream()
             .map(r -> checkNotNull(r.getField(0)).toString())
             .collect(Collectors.toList());
-    context.out.write(
-            "%table database\n" + StringUtils.join(databases, "\n") + "\n");
+    context.out.println(
+            "%table database\n" + StringUtils.join(databases, "\n"));
   }
 
   private void callShowCurrentDatabase(InterpreterContext context) throws IOException {
     TableResult tableResult = this.tbenv.executeSql("SHOW Current Database");
     String database = tableResult.collect().next().getField(0).toString();
-    context.out.write("%text current database: " + database + "\n");
+    context.out.println("%text current database: " + database);
   }
 
   private void callShowTables(InterpreterContext context) throws IOException {
@@ -532,8 +532,8 @@ public class Flink114SqlInterpreter {
             .map(r -> checkNotNull(r.getField(0)).toString())
             .filter(tbl -> !tbl.startsWith("UnnamedTable"))
             .collect(Collectors.toList());
-    context.out.write(
-            "%table table\n" + StringUtils.join(tables, "\n") + "\n");
+    context.out.println(
+            "%table table\n" + StringUtils.join(tables, "\n"));
   }
 
   private void callShowFunctions(InterpreterContext context) throws IOException {
@@ -541,13 +541,13 @@ public class Flink114SqlInterpreter {
     List<String> functions = CollectionUtil.iteratorToList(tableResult.collect()).stream()
             .map(r -> checkNotNull(r.getField(0)).toString())
             .collect(Collectors.toList());
-    context.out.write(
-            "%table function\n" + StringUtils.join(functions, "\n") + "\n");
+    context.out.println(
+            "%table function\n" + StringUtils.join(functions, "\n"));
   }
 
   private void callShowModules(InterpreterContext context) throws IOException {
     String[] modules = this.tbenv.listModules();
-    context.out.write("%table modules\n" + StringUtils.join(modules, "\n") + "\n");
+    context.out.println("%table modules\n" + StringUtils.join(modules, "\n"));
   }
 
   private void callShowPartitions(String sql, InterpreterContext context) throws IOException {
@@ -555,8 +555,8 @@ public class Flink114SqlInterpreter {
     List<String> partions = CollectionUtil.iteratorToList(tableResult.collect()).stream()
             .map(r -> checkNotNull(r.getField(0)).toString())
             .collect(Collectors.toList());
-    context.out.write(
-            "%table partitions\n" + StringUtils.join(partions, "\n") + "\n");
+    context.out.println(
+            "%table partitions\n" + StringUtils.join(partions, "\n"));
   }
 
   private void callDDL(String sql, InterpreterContext context, String message) throws IOException {
@@ -568,7 +568,7 @@ public class Flink114SqlInterpreter {
         lock.unlock();
       }
     }
-    context.out.write(message + "\n");
+    context.out.println(message);
   }
 
   private void callDescribe(String name, InterpreterContext context) throws IOException {
@@ -585,6 +585,6 @@ public class Flink114SqlInterpreter {
       Row row = result.next();
       builder.append(row.getField(0) + "\t" + row.getField(1) + "\n");
     }
-    context.out.write("%table\n" + builder.toString());
+    context.out.println("%table\n" + builder);
   }
 }

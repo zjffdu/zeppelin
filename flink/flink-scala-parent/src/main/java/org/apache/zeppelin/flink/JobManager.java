@@ -243,9 +243,8 @@ public class JobManager {
             if (isFirstPoll) {
               StringBuilder builder = new StringBuilder("%angular ");
               builder.append("<h1>Duration: {{duration}} </h1>");
-              builder.append("\n%text ");
               context.out.clear(false);
-              context.out.write(builder.toString());
+              context.out.println(builder.toString());
               context.out.flush();
               isFirstPoll = false;
             }

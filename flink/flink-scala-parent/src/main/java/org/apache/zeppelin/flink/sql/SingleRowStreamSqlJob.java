@@ -84,7 +84,7 @@ public class SingleRowStreamSqlJob extends AbstractStreamSqlJob {
             new SingleRowInterpreterResult(rowToList(latestRow), template, context);
     if (isFirstRefresh) {
       context.out().clear(false);
-      context.out.write(singleRowResult.toAngular());
+      context.out.println(singleRowResult.toAngular());
       context.out.flush();
       // should checkpoint the html output, otherwise frontend won't display the output
       // after recovering.

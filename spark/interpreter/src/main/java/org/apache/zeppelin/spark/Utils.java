@@ -70,8 +70,7 @@ class Utils {
             && Boolean.parseBoolean(
                     properties.getProperty("zeppelin.spark.deprecatedMsg.show", "true"))) {
       try {
-        context.out.write(DEPRECATED_MESSAGE);
-        context.out.write("%text ");
+        context.out.println(DEPRECATED_MESSAGE);
       } catch (IOException e) {
         throw new InterpreterException(e);
       }

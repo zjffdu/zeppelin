@@ -121,10 +121,10 @@ public class JupyterKernelClient {
         String height = context.getLocalProperties().getOrDefault("height", defaultHeight);
         String defaultWidth = properties.getProperty("zeppelin.R.shiny.iframe_width", "100%");
         String width = context.getLocalProperties().getOrDefault("width", defaultWidth);
-        context.out.write("\n%html " + "<iframe src=\"" + url + "\" height =\"" +
+        context.out.println("\n%html " + "<iframe src=\"" + url + "\" height =\"" +
                 height + "\" width=\"" + width + "\" frameBorder=\"0\"></iframe>");
         context.out.flush();
-        context.out.write("\n%text ");
+        context.out.println("%text ");
         context.getIntpEventClient().checkpointOutput(context.getNoteId(),
                 context.getParagraphId());
         return true;
@@ -221,7 +221,7 @@ public class JupyterKernelClient {
           // only output the extra error when no error message is displayed before.
           if (finalResponseBuilder.getStatus() != null &&
                   finalResponseBuilder.getStatus() != ExecuteStatus.ERROR) {
-            interpreterOutput.getInterpreterOutput().write("\n%text " +
+            interpreterOutput.getInterpreterOutput().println("%text " +
                     ExceptionUtils.getStackTrace(throwable));
             interpreterOutput.getInterpreterOutput().flush();
           }

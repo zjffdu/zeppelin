@@ -86,7 +86,7 @@ public class HiveUtils {
           LOGGER.debug("Hive job output: {}", logsOutput);
           boolean displayLogProperty = context.getBooleanLocalProperty("displayLog", displayLog);
           if (!StringUtils.isBlank(logsOutput) && displayLogProperty) {
-            context.out.write(logsOutput + "\n");
+            context.out.println(logsOutput);
             context.out.flush();
           }
           if (!StringUtils.isBlank(logsOutput) && progressBar != null && displayLogProperty) {

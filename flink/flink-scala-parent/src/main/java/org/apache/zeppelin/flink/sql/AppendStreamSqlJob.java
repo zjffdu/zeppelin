@@ -122,7 +122,6 @@ public class AppendStreamSqlJob extends AbstractStreamSqlJob {
         builder.append(tableToString(materializedTable));
       }
     }
-    builder.append("\n%text ");
     return builder.toString();
   }
 
@@ -131,7 +130,7 @@ public class AppendStreamSqlJob extends AbstractStreamSqlJob {
     context.out().clear(false);
     try {
       String result = buildResult();
-      context.out.write(result);
+      context.out.println(result);
       context.out.flush();
       LOGGER.debug("Refresh with data: " + result);
     } catch (IOException e) {
