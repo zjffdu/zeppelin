@@ -17,17 +17,19 @@
 
 package org.apache.zeppelin.spark;
 
+import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
 import org.apache.spark.sql.SQLContext;
-import org.apache.zeppelin.interpreter.ZeppelinContext;
-import org.apache.zeppelin.interpreter.Interpreter;
-import org.apache.zeppelin.interpreter.InterpreterContext;
-import org.apache.zeppelin.interpreter.InterpreterException;
-import org.apache.zeppelin.interpreter.InterpreterResult;
+import org.apache.spark.sql.SparkSession;
+import org.apache.zeppelin.interpreter.*;
 import org.apache.zeppelin.interpreter.thrift.InterpreterCompletion;
 import org.apache.zeppelin.kotlin.KotlinInterpreter;
 
+import java.io.File;
+import java.net.URLClassLoader;
 import java.util.List;
+import java.util.Properties;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This is bridge class which bridge the communication between java side and scala side.
@@ -35,15 +37,60 @@ import java.util.List;
  */
 public abstract class AbstractSparkScalaInterpreter {
 
-  public abstract SparkContext getSparkContext();
+  private static AtomicInteger SESSION_NUM = new AtomicInteger(0);
 
-  public abstract SQLContext getSqlContext();
+  protected SparkConf conf;
+  protected SparkContext sc;
+  protected SparkSession sparkSession;
+  protected SQLContext sqlContext;
+  protected String sparkUrl;
+  protected ZeppelinContext z;
 
-  public abstract Object getSparkSession();
+  public SparkContext getSparkContext() {
+    return this.sc;
+  }
 
-  public abstract String getSparkUrl();
+  public SQLContext getSqlContext() {
+    return this.sqlContext;
+  }
 
-  public abstract ZeppelinContext getZeppelinContext();
+  public Object getSparkSession() {
+    return this.sparkSession;
+  }
+
+  public String getSparkUrl() {
+    return this.sparkUrl;
+  }
+
+  public ZeppelinContext getZeppelinContext() {
+    return this.z;
+  }
+
+  public AbstractSparkScalaInterpreter() {
+  }
+
+  protected void open() {
+    /* Required for scoped mode.
+     * In scoped mode multiple scala compiler (repl) generates class in the same directory.
+     * Class names is not randomly generated and look like '$line12.$read$$iw$$iw'
+     * Therefore it's possible to generated class conflict(overwrite) with other repl generated
+     * class.
+     *
+     * To prevent generated class name conflict,
+     * change prefix of generated class name from each scala compiler (repl) instance.
+     *
+     * In Spark 2.x, REPL generated wrapper class name should compatible with the pattern
+     * ^(\$line(?:\d+)\.\$read)(?:\$\$iw)+$
+     *
+     * As hashCode() can return a negative integer value and the minus character '-' is invalid
+     * in a package name we change it to a numeric value '0' which still conforms to the regexp.
+     *
+     */
+    System.setProperty("scala.repl.name.line", ("$line" + this.hashCode()).replace('-', '0'));
+    SESSION_NUM.incrementAndGet();
+  }
+
+  public abstract void close() throws InterpreterException;
 
   public int getProgress(InterpreterContext context) throws InterpreterException {
     return getProgress(Utils.buildJobGroupId(context), context);
@@ -59,10 +106,6 @@ public abstract class AbstractSparkScalaInterpreter {
   public Interpreter.FormType getFormType() throws InterpreterException {
     return Interpreter.FormType.SIMPLE;
   }
-
-  public abstract void open();
-
-  public abstract void close();
 
   public abstract InterpreterResult interpret(String st, InterpreterContext context);
 

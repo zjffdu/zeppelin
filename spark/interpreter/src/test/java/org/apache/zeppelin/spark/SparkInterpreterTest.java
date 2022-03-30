@@ -140,12 +140,6 @@ public class SparkInterpreterTest {
     result = interpreter.interpret("/*line 1 \n line 2*/print(\"hello world\")", getInterpreterContext());
     assertEquals(InterpreterResult.Code.SUCCESS, result.code());
 
-    if (!interpreter.isScala213()) {
-      // $intp not available for scala-2.13
-      result = interpreter.interpret("$intp", getInterpreterContext());
-      assertEquals(InterpreterResult.Code.SUCCESS, result.code());
-    }
-    
     // Companion object with case class
     result = interpreter.interpret("import scala.math._\n" +
         "object Circle {\n" +
