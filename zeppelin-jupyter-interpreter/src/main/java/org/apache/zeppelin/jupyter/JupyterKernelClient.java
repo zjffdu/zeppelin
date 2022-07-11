@@ -20,6 +20,7 @@ package org.apache.zeppelin.jupyter;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.zeppelin.interpreter.InterpreterContext;
 import org.apache.zeppelin.interpreter.InterpreterResult;
@@ -116,6 +117,17 @@ public class JupyterKernelClient {
       if (matcher.matches()) {
         String url = matcher.group(1);
         LOGGER.info("Matching shiny app url: {}", url);
+        String shinyServer = context.getStringLocalProperty("shiny_server", "");
+        if (StringUtils.isNotBlank(shinyServer)) {
+          String[] parts = url.split(":");
+          if (parts.length != 3) {
+            throw new IOException("Invalid shiny url: " + url + ", it should have 3 parts separated by ':'");
+          }
+          String port = parts[2];
+          url = "http://" + shinyServer + ":" + port;
+          LOGGER.info("Use shiny app url: {}", url);
+        }
+
         context.out.clear();
         String defaultHeight = properties.getProperty("zeppelin.R.shiny.iframe_height", "500px");
         String height = context.getLocalProperties().getOrDefault("height", defaultHeight);
