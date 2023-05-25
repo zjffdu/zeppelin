@@ -34,7 +34,7 @@
   <properties>
     <interpreter.name>scalding</interpreter.name>
     <!--library versions-->
-    <hadoop.version>${hadoop2.6.version}</hadoop.version>
+    <hadoop.version>2.10.2</hadoop.version>
     <scalding.version>0.16.1-RC1</scalding.version>
 
     <!--plugin versions-->
