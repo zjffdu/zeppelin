@@ -87,7 +87,7 @@
       </activation>
 
       <properties>
-        <hadoop.version>${hadoop2.7.version}</hadoop.version>
+        <hadoop.version>2.10.2</hadoop.version>
       </properties>
       <dependencies>
         <dependency>
@@ -110,7 +110,7 @@
       <id>hadoop3</id>
 
       <properties>
-        <hadoop.version>${hadoop3.2.version}</hadoop.version>
+        <hadoop.version>2.10.2</hadoop.version>
         <hadoop-client-runtime.artifact>hadoop-client-runtime</hadoop-client-runtime.artifact>
       </properties>
 
