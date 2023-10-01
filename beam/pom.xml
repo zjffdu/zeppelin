@@ -36,13 +36,13 @@
 
     <beam.hadoop.version>3.2.3</beam.hadoop.version>
     <beam.spark.version>1.6.2</beam.spark.version>
-    <beam.beam.version>2.0.0</beam.beam.version>
+    <beam.beam.version>2.2.0</beam.beam.version>
     <beam.scala.binary.version>2.10</beam.scala.binary.version>
 
     <!-- library versions -->
     <netty.version>4.1.42.Final</netty.version>
     <servlet.api.version>3.1.0</servlet.api.version>
-    <avro.version>1.8.1</avro.version> <!-- should match beam dependency -->
+    <avro.version>1.11.3</avro.version> <!-- should match beam dependency -->
   </properties>
   
   <dependencies>
