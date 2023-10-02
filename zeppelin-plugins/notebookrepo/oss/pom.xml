@@ -34,7 +34,7 @@
     <description>NotebookRepo implementation based on Aliyun OSS</description>
 
     <properties>
-        <oss.version>3.8.0</oss.version>
+        <oss.version>3.10.2</oss.version>
         <plugin.name>NotebookRepo/OSSNotebookRepo</plugin.name>
     </properties>
 
