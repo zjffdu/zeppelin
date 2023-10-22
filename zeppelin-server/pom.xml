@@ -40,7 +40,7 @@
     <jna.version>4.1.0</jna.version>
     <jackson.version>2.12.6.1</jackson.version>
     <nimbus.version>9.13</nimbus.version>
-    <kerberos.version>2.0.0-M15</kerberos.version>
+    <kerberos.version>2.0.0.AM27</kerberos.version>
 
     <!--test library versions-->
     <selenium.java.version>2.48.2</selenium.java.version>
