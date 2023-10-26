@@ -33,7 +33,7 @@
     <name>Zeppelin: Flink1.14 Shims</name>
 
     <properties>
-        <flink.version>${flink1.14.version}</flink.version>
+        <flink.version>1.18.0</flink.version>
     </properties>
 
     <dependencies>
