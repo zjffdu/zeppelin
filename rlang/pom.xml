@@ -34,7 +34,7 @@
 
     <properties>
         <interpreter.name>r</interpreter.name>
-        <spark.version>2.4.5</spark.version>
+        <spark.version>2.4.6</spark.version>
 
         <spark.archive>spark-${spark.version}</spark.archive>
         <spark.src.download.url>
@@ -196,7 +196,7 @@
                         </filter>
                     </filters>
                     <transformers>
-                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                         <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                             <resource>reference.conf</resource>
                         </transformer>
