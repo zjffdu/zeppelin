@@ -35,7 +35,7 @@
         <!--library versions-->
         <interpreter.name>livy</interpreter.name>
         <commons.exec.version>1.3</commons.exec.version>
-        <spring.web.version>4.3.0.RELEASE</spring.web.version>
+        <spring.web.version>5.3.34</spring.web.version>
         <spring.security.kerberosclient>1.0.1.RELEASE</spring.security.kerberosclient>
 
         <!--test library versions-->
@@ -344,8 +344,7 @@
                         </goals>
                         <configuration>
                             <target>
-                                <delete file="${project.build.directory}/unit-tests.log"
-                                        quiet="true"/>
+                                <delete file="${project.build.directory}/unit-tests.log" quiet="true"/>
                                 <delete file="${project.build.directory}/jacoco.exec" quiet="true"/>
                                 <delete dir="${project.build.directory}/tmp" quiet="true"/>
                             </target>
