@@ -27,7 +27,7 @@
     "@angular/platform-browser-dynamic": "~8.2.10",
     "@angular/router": "~8.2.10",
     "@antv/data-set": "^0.10.2",
-    "@antv/g2": "^3.5.4",
+    "@antv/g2": "^4.0.0",
     "ansi_up": "^4.0.4",
     "core-js": "^2.5.4",
     "date-fns": "^1.30.1",
