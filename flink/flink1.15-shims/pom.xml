@@ -33,7 +33,7 @@
     <name>Zeppelin: Flink1.15 Shims</name>
 
     <properties>
-        <flink.version>${flink1.15.version}</flink.version>
+        <flink.version>1.19.1</flink.version>
         <flink.scala.binary.version>2.12</flink.scala.binary.version>
     </properties>
 
