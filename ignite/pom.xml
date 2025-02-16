@@ -33,7 +33,7 @@
 
   <properties>
     <interpreter.name>ignite</interpreter.name>
-    <ignite.version>2.7.6</ignite.version>
+    <ignite.version>2.17.0</ignite.version>
     <ignite.scala.version>${scala.2.11.version}</ignite.scala.version>
 
     <!--plugin versions-->
