@@ -28,7 +28,7 @@
     "angular-viewport-watch": "git+https://github.com/wix/angular-viewport-watch.git",
     "ansi_up": "^2.0.2",
     "github-markdown-css": "2.6.0",
-    "grunt-angular-templates": "^0.5.7",
+    "grunt-angular-templates": "^1.2.0",
     "grunt-dom-munger": "^3.4.0",
     "headroom.js": "^0.9.3",
     "moment": "^2.29.2",
