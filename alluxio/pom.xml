@@ -32,7 +32,7 @@
     <name>Zeppelin: Alluxio interpreter</name>
 
     <properties>
-        <alluxio.version>1.0.0</alluxio.version>
+        <alluxio.version>2.0.0</alluxio.version>
         <interpreter.name>alluxio</interpreter.name>
     </properties>
 
