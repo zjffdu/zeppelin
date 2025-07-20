@@ -36,7 +36,7 @@
     <elasticsearch.version>2.4.3</elasticsearch.version>
     <httpasyncclient.version>4.0.2</httpasyncclient.version>
     <guava.version>18.0</guava.version>
-    <json-flattener.version>0.1.6</json-flattener.version>
+    <json-flattener.version>0.5.0</json-flattener.version>
     <unirest.version>1.4.9</unirest.version>
     <!--test library versions-->
     <hamcrest.all.version>1.3</hamcrest.all.version>
